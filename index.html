@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>APP Lista de la Compra</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Mi CSS -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="container-fluid" id="container">
+        <div class="row justify-content-center">
+            <div class="col-10 bg-primary mt-5 pl-4 pr-4 pt-2 pb-2 rounded text-center align-content-center">
+                <h1 id="titulo1">
+                    <i class="material-icons shopIcon">
+                        shopping_cart
+                    </i>
+                    Lista de la Compra</h1>
+            </div>
+            <div class="row justify-content-center" id=" botones">
+                <div class="col-12 mt-4 p-1 rounded">
+                    <form action="" id="form" class="form-inline">
+                        <div class="form-group">
+                            <div class="col-5 mt-4 p-1 rounded">
+                                <input type="text" id="article" class="form-control w-100"
+                                    placeholder="Indica un artículo a comprar">
+                            </div>
+                            <div class="col-2 mt-4 p-1 rounded">
+                                <input type="number" id="quantity" class="form-control" placeholder="Cantidad">
+                            </div>
+                            <div class="col-2 mt-4 p-1 rounded">
+                                <select id="priority" class="form-control">
+                                    <option value="Baja" selected>Baja</option>
+                                    <option value="Alta">Alta</option>
+                                    <option value="Urgente">Urgente</option>
+                                </select>
+                            </div>
+                            <div class="col-2 mt-4 p-1 rounded w-100">
+                                <button id="addButton" class="btn btn-primary w-100">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="shopList">
+
+            </div>
+        </div>
+    </div>
+    <!-- Mi JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
