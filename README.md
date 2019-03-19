@@ -1,0 +1,3 @@
+# APP Lista de la Compra
+
+Se trata de una APP realizada en JavaScript...
