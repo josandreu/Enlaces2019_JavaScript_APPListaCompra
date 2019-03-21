@@ -77,11 +77,16 @@ const showList = () => {
         shopList.innerHTML = "";
         list.forEach(element => {
             // CUIDADO! si ponemos solo innenHTML = , machaca lo anterior
+            // utilizamos la notación ` `
             shopList.innerHTML +=
                 /*html*/
                 `<div class = "alert alert-success">
-                <i class="material-icons align-middle">list</i> 
-                ${element.Articulo} - ${element.Cantidad} - ${element.Prioridad}
+                <i class="material-icons align-middle">list</i>
+                <b>${element.Articulo}</b>
+                <span class="badge badge-primary">${element.Cantidad}</span>
+                <span class="badge badge-pill badge-secondary">${element.Prioridad}</span>
+                <span id="id" class="d-none">${element.Id}</span>
+                <i class="material-icons align-middle float-right deleteIcon">delete</i>
                 </div>`;
         });
     }
@@ -105,6 +110,42 @@ const addArticle = (e) => {
     checkInput();
 };
 
+const deleteElement = (id) => {
+    /*
+    list.forEach(function (item, index, object) {
+        if (item.id === id) {
+            object.splice(index, 1);
+        }
+    });
+    */
+    let index = 0;
+    let i = 0;
+    for (i; i < list.length; i++) {
+        if (list[i].id === id) {
+            index = i;
+        }
+    }
+    // borramos el elemento que tenga el índice = i
+    list.splice(index, 1);
+    // actualizamos el localStorage una vez eliminado el elemento del array list
+    localStorage.setItem('listado', JSON.stringify(list));
+    // mostramos el contenido de la lista
+    showList();
+}
+
+const action = (e) => {
+    // para recuperar el id que tenemos de cada elemento y que está oculto necesitamos 
+    // esta ruta: e.path[1].children[4].innerHTML
+    // 1º comprobamos que estamos pinchando en la papelera (accedemos al texto de la papelera a través de su ruta del dom)
+    // hacemos un trim() del texto recuperado por si hubiera algún espacio o salto de línea
+    if (e.target.innerHTML.trim() === 'delete') {
+        // 2º ahora tenemos que eliminar el elemento del array que tenga como id el mismo que la papelera que hemos pinchado
+        deleteElement(e.path[1].children[4].innerHTML);
+    }
+
+
+}
+
 // método que se ha de ejecutar al inicio
 const init = () => {
     checkInput();
@@ -125,3 +166,5 @@ document.addEventListener("DOMContentLoaded", init)
 document.addEventListener("keyup", checkInput);
 // evento asociado al botón
 addButton.addEventListener('click', addArticle);
+// añadimos un listener a toda el area donde aparece el listado de productos, nos servirá para poder eliminarlos
+shopList.addEventListener('click', action);
