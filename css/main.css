@@ -17,3 +17,8 @@
 .shopList {
     
 }
+
+.checkIcon {
+    cursor: pointer;
+    color: black;
+}

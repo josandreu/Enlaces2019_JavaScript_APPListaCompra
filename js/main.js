@@ -1,14 +1,13 @@
 /*
-const titulo1 = document.getElementById('titulo1');
-
-titulo1.style.color = "lightgray";
-
-function cambiarColor() {
-    titulo1.className = "text-light text-center";
-    // titulo1.style.background = "steelblue";
-}
-
-titulo1.addEventListener("click", cambiarColor);
+METER UN ICONO PARA INDICAR SI SE HA COMPRADO ESE PRODUCTO OK
+AL PINCHAR CAMBIA EL COLOR DEL BACKGROUND DEL ELEMENTO y del icono check OK
+METER UNA BARRA DE PROGRESO OK
+CAMBIAR LA PROPIEDAD COMPRADO A true OK
+AHORA NECESITAMOS QUE LA BARRA CAMBIE DINÁMICAMENTE
+    1º RECUPERAR LA LONGITUD DE LA LISTA
+    2º RECUPERAR LOS ELEMENTOS QUE TIENE comprado : true
+    3º calcular el porcentaje 
+        marcados * 100 / total
 */
 
 /* (1) DEFINICIÓN DE VARIABLES */
@@ -20,6 +19,10 @@ const addButton = document.querySelector('#addButton');
 const form = document.querySelector('#form');
 const shopList = document.getElementById('shopList');
 let list = [];
+const checkIcon = document.getElementsByClassName('check');
+const divCheck = document.getElementsByClassName('checkDiv');
+// barra de progreso
+const bar = document.getElementById('progress');
 
 /* (2) DEFINICIÓN DE FUNCIONES */
 
@@ -50,7 +53,8 @@ const createList = (article, quantity, priority) => {
         // agregamos un id, al que asignamos un valor aleatorio
         'Id': Math.random()
             .toString()
-            .substr(2, 9)
+            .substr(2, 9),
+        'Comprado': false
     };
     // agregamos el objeto al array
     list.push(element);
@@ -80,13 +84,14 @@ const showList = () => {
             // utilizamos la notación ` `
             shopList.innerHTML +=
                 /*html*/
-                `<div class = "alert alert-success">
+                `<div class="alert alert-success checkDiv">
                 <i class="material-icons align-middle">list</i>
                 <b>${element.Articulo}</b>
                 <span class="badge badge-primary">${element.Cantidad}</span>
                 <span class="badge badge-pill badge-secondary">${element.Prioridad}</span>
                 <span id="id" class="d-none">${element.Id}</span>
                 <i class="material-icons align-middle float-right deleteIcon">delete</i>
+                <i id="iconCh" class="material-icons align-middle float-right checkIcon check">check_circle_outline</i>
                 </div>`;
         });
     }
@@ -133,6 +138,25 @@ const deleteElement = (id) => {
     showList();
 }
 
+const changeColors = () => {
+    checkIcon[0].style.color = "green";
+    divCheck[0].classList.remove("alert-success");
+    divCheck[0].classList.add("alert-warning");
+}
+
+const changeComprado = (id) => {
+    let contador = 0;
+    list.forEach(element => {
+        if (element.Id === id) {
+            element.Comprado = true;
+        } else if (element.Comprado === true) {
+            contador++;
+        }
+    });
+    localStorage.setItem('listado', JSON.stringify(list));
+    return contador;
+}
+
 const action = (e) => {
     // para recuperar el id que tenemos de cada elemento y que está oculto necesitamos 
     // esta ruta: e.path[1].children[4].innerHTML
@@ -143,6 +167,13 @@ const action = (e) => {
         deleteElement(e.path[1].children[4].innerHTML);
     }
 
+    if (e.target.innerHTML.trim() === 'check_circle_outline') {
+        changeColors();
+        let n = changeComprado(e.path[1].children[4].innerHTML);
+        console.log(list.length);
+        console.log(n);
+
+    }
 
 }
 
