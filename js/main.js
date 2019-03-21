@@ -87,12 +87,16 @@ const showList = () => {
     }
 }
 
-// pasamos el evento por argumento
+// Esta función se ejecuta cuando damos click al botón, pasamos el evento por argumento
 const addArticle = (e) => {
     // para prevenir el comportamiento del formulario por defecto
     e.preventDefault();
     // llamamos a la funcion que nos crea la lista de articulos
     createList(article.value, quantity.value, priority.value);
+    // AHORA VAMOS A GUARDAR LA LISTA EN EL localStorage del navegador
+    // la key listado, puede ser cualquier otra cosa
+    // para poder pasar el array, lo convertimos a cadena con JSON.stringify
+    localStorage.setItem('listado', JSON.stringify(list));
     // ahora a la funcion que la muestra
     showList();
     // para que cada vez que le demos al botón al añadir un articulo, se borre el formulario
@@ -101,9 +105,14 @@ const addArticle = (e) => {
     checkInput();
 };
 
-
+// método que se ha de ejecutar al inicio
 const init = () => {
     checkInput();
+    // si hay algo en el localStorage, lo asignamos al array para mostrarlo
+    if (localStorage.length > 0 || localStorage.getItem('listado') != null) {
+        list = JSON.parse(localStorage.getItem('listado'));
+    }
+    // mostramos la lista
     showList();
 };
 
