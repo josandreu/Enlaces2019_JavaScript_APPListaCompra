@@ -19,41 +19,51 @@
         <div class="row justify-content-center">
             <div class="col-10 bg-primary mt-5 pl-4 pr-4 pt-2 pb-2 rounded text-center align-content-center">
                 <h1 id="titulo1">
-                    <i class="material-icons shopIcon">
+                    <i class="material-icons shopIcon align-middle">
                         shopping_cart
                     </i>
                     Lista de la Compra</h1>
             </div>
             <div class="row justify-content-center" id=" botones">
-                <div class="col-12 mt-4 p-1 rounded">
-                    <form action="" id="form" class="form-inline">
-                        <div class="form-group">
-                            <div class="col-5 mt-4 p-1 rounded">
-                                <input type="text" id="article" class="form-control w-100"
-                                    placeholder="Indica un artículo a comprar">
-                            </div>
-                            <div class="col-2 mt-4 p-1 rounded">
-                                <input type="number" id="quantity" class="form-control" placeholder="Cantidad">
-                            </div>
-                            <div class="col-2 mt-4 p-1 rounded">
-                                <select id="priority" class="form-control">
-                                    <option value="Baja" selected>Baja</option>
-                                    <option value="Alta">Alta</option>
-                                    <option value="Urgente">Urgente</option>
-                                </select>
-                            </div>
-                            <div class="col-2 mt-4 p-1 rounded w-100">
-                                <button id="addButton" class="btn btn-primary w-100">Añadir</button>
-                            </div>
+                <div class="col-12 mt-4">
+                    <form id="form" class="form-inline">
+                        <div class="col-5 mt-4 p-1 rounded">
+                            <input type="text" id="article" class="form-control w-100"
+                                placeholder="Indica un artículo a comprar">
+                        </div>
+                        <div class="col-2 mt-4 p-1 rounded">
+                            <input type="number" id="quantity" class="form-control quantity" placeholder="Cantidad">
+                        </div>
+                        <div class="col-3 mt-4 p-1 rounded">
+                            <select id="priority" class="form-control priority">
+                                <option value="Baja" selected>Baja</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Urgente">Urgente</option>
+                            </select>
+                        </div>
+                        <div class="col-2 mt-4 p-1 w-100">
+                            <button id="addButton" class="btn btn-outline-primary w-100">Añadir</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div id="shopList">
+        </div>
+        <div class="row justify-content-center align-content-center mt-4">
+            <div id="shopList" class="col p-2">
 
             </div>
         </div>
     </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <!-- Mi JS -->
     <script src="js/main.js"></script>
 </body>

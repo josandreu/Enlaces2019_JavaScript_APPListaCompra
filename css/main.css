@@ -1,3 +1,11 @@
 .shopIcon {
     font-size: 1em;
 }
+
+.quantity {
+    width: 100% !important;
+}
+
+.priority {
+    width: 100% !important;
+}
