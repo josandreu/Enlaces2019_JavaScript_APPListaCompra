@@ -19,8 +19,6 @@ const addButton = document.querySelector('#addButton');
 const form = document.querySelector('#form');
 const shopList = document.getElementById('shopList');
 let list = [];
-const checkIcon = document.getElementsByClassName('check');
-const divCheck = document.getElementsByClassName('checkDiv');
 // barra de progreso
 const bar = document.getElementById('progress');
 
@@ -62,6 +60,7 @@ const createList = (article, quantity, priority) => {
 
 // método para mostrar los elementos que vamos agregando a la lista
 const showList = () => {
+    // si no hay elementos en la lista...
     if (list.length === 0) {
         /*
         shopList.innerHTML = "";
@@ -78,24 +77,31 @@ const showList = () => {
             </div>`;
 
     } else {
+        // si hay elementos...
         shopList.innerHTML = "";
         list.forEach(element => {
+            let divColor = 'success';
+            let checkColor = 'success';
+            if (element.Comprado === true) {
+                divColor = 'warning';
+                checkColor = 'warning';
+            }
             // CUIDADO! si ponemos solo innenHTML = , machaca lo anterior
             // utilizamos la notación ` `
             shopList.innerHTML +=
                 /*html*/
-                `<div class="alert alert-success checkDiv">
+                `<div id="${element.Id}ck" class="alert alert-${divColor}">
                 <i class="material-icons align-middle">list</i>
                 <b>${element.Articulo}</b>
                 <span class="badge badge-primary">${element.Cantidad}</span>
                 <span class="badge badge-pill badge-secondary">${element.Prioridad}</span>
                 <span id="id" class="d-none">${element.Id}</span>
                 <i class="material-icons align-middle float-right deleteIcon">delete</i>
-                <i id="iconCh" class="material-icons align-middle float-right checkIcon check">check_circle_outline</i>
+                <i id="${element.Id}" class="material-icons align-middle float-right check text-${checkColor}">check_circle_outline</i>
                 </div>`;
         });
     }
-}
+};
 
 // Esta función se ejecuta cuando damos click al botón, pasamos el evento por argumento
 const addArticle = (e) => {
@@ -113,6 +119,8 @@ const addArticle = (e) => {
     form.reset();
     // volvemos a comprobar una vez limpiado que el botón se deshabilita
     checkInput();
+    // cambiamos barra de progreso
+    changeBar();
 };
 
 const deleteElement = (id) => {
@@ -136,26 +144,39 @@ const deleteElement = (id) => {
     localStorage.setItem('listado', JSON.stringify(list));
     // mostramos el contenido de la lista
     showList();
-}
+};
 
-const changeColors = () => {
-    checkIcon[0].style.color = "green";
-    divCheck[0].classList.remove("alert-success");
-    divCheck[0].classList.add("alert-warning");
-}
+const changeColors = (id) => {
+    document.getElementById(id).classList.remove("text-success");
+    document.getElementById(id).classList.add("text-warning");
+    document.getElementById(id + 'ck').classList.remove("alert-success");
+    document.getElementById(id + 'ck').classList.add("alert-warning");
+};
 
 const changeComprado = (id) => {
-    let contador = 0;
     list.forEach(element => {
         if (element.Id === id) {
             element.Comprado = true;
-        } else if (element.Comprado === true) {
-            contador++;
+            changeColors(id);
         }
     });
     localStorage.setItem('listado', JSON.stringify(list));
-    return contador;
-}
+
+};
+
+// para saber cuantos elementos han sido comprados
+const comprados = () => {
+    let contador = 0;
+    let elementos = 0;
+    list.forEach(element => {
+        elementos++;
+        if (element.Comprado === true) {
+            contador++;
+        }
+    });
+    let porcentaje = (contador * 100) / elementos;
+    return porcentaje;
+};
 
 const action = (e) => {
     // para recuperar el id que tenemos de cada elemento y que está oculto necesitamos 
@@ -168,14 +189,19 @@ const action = (e) => {
     }
 
     if (e.target.innerHTML.trim() === 'check_circle_outline') {
-        changeColors();
-        let n = changeComprado(e.path[1].children[4].innerHTML);
-        console.log(list.length);
-        console.log(n);
-
+        changeComprado(e.path[1].children[4].innerHTML);
     }
 
-}
+    changeBar();
+};
+
+const changeBar = () => {
+    let porcentaje = comprados().toFixed();
+    bar.innerText = porcentaje + '%';
+    bar.style.width = porcentaje + '%';
+    bar.setAttribute('aria-valuenow', porcentaje + '');
+};
+
 
 // método que se ha de ejecutar al inicio
 const init = () => {
@@ -186,13 +212,15 @@ const init = () => {
     }
     // mostramos la lista
     showList();
+    comprados();
+    changeBar();
 };
 
 
 /* (3) DEFINICIÓN DE EVENTOS */
 
 // pendiente de que cargue el dom+
-document.addEventListener("DOMContentLoaded", init)
+document.addEventListener("DOMContentLoaded", init);
 // este listener escuchará cada vez que pulsemos una tecla
 document.addEventListener("keyup", checkInput);
 // evento asociado al botón
