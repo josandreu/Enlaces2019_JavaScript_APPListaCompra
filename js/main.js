@@ -153,6 +153,7 @@ const changeColors = (id) => {
     document.getElementById(id + 'ck').classList.add("alert-warning");
 };
 
+// método que cambia el valor de Comprado del elemento en el array list en el caso de que pulsemos el icono de check
 const changeComprado = (id) => {
     list.forEach(element => {
         if (element.Id === id) {
@@ -166,18 +167,23 @@ const changeComprado = (id) => {
 
 // para saber cuantos elementos han sido comprados
 const comprados = () => {
+    // contador de elementos comprados
     let contador = 0;
+    // contador del total de elementos de la lista
     let elementos = 0;
+    // recorremos el array
     list.forEach(element => {
         elementos++;
         if (element.Comprado === true) {
             contador++;
         }
     });
+    // calculo del porcentaje de elementos que tienen Comprado = true
     let porcentaje = (contador * 100) / elementos;
     return porcentaje;
 };
 
+// se ejecuta cuando pinchamos en el div que contiene la lista de productos
 const action = (e) => {
     // para recuperar el id que tenemos de cada elemento y que está oculto necesitamos 
     // esta ruta: e.path[1].children[4].innerHTML
@@ -191,17 +197,17 @@ const action = (e) => {
     if (e.target.innerHTML.trim() === 'check_circle_outline') {
         changeComprado(e.path[1].children[4].innerHTML);
     }
-
+    // actualizamos barra de progreso
     changeBar();
 };
 
+// método que actualiza la barra de progreso dependiendo de los items comprados
 const changeBar = () => {
     let porcentaje = comprados().toFixed();
     bar.innerText = porcentaje + '%';
     bar.style.width = porcentaje + '%';
     bar.setAttribute('aria-valuenow', porcentaje + '');
 };
-
 
 // método que se ha de ejecutar al inicio
 const init = () => {
@@ -212,7 +218,9 @@ const init = () => {
     }
     // mostramos la lista
     showList();
+    // actualizamos elementos comprados
     comprados();
+    // actualizamos barra de progreso
     changeBar();
 };
 
