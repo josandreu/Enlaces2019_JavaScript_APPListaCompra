@@ -144,6 +144,7 @@ const deleteElement = (id) => {
     localStorage.setItem('listado', JSON.stringify(list));
     // mostramos el contenido de la lista
     showList();
+    changeBar();
 };
 
 const changeColors = (id) => {
