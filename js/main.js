@@ -205,9 +205,16 @@ const action = (e) => {
 // método que actualiza la barra de progreso dependiendo de los items comprados
 const changeBar = () => {
     let porcentaje = comprados().toFixed();
-    bar.innerText = porcentaje + '%';
-    bar.style.width = porcentaje + '%';
-    bar.setAttribute('aria-valuenow', porcentaje + '');
+    if (isNaN(porcentaje)) {
+        bar.innerText = '0%';
+        bar.style.width = '0%';
+        bar.setAttribute('aria-valuenow', '0');
+    } else {
+        bar.innerText = porcentaje + '%';
+        bar.style.width = porcentaje + '%';
+        bar.setAttribute('aria-valuenow', porcentaje + '');
+    }
+
 };
 
 // método que se ha de ejecutar al inicio
