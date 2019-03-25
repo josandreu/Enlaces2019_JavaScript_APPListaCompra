@@ -144,7 +144,6 @@ const deleteElement = (id) => {
     localStorage.setItem('listado', JSON.stringify(list));
     // mostramos el contenido de la lista
     showList();
-    changeBar();
 };
 
 const changeColors = (id) => {
@@ -175,7 +174,7 @@ const comprados = () => {
     // recorremos el array
     list.forEach(element => {
         elementos++;
-        if (element.Comprado === true) {
+        if (element.Comprado) {
             contador++;
         }
     });
