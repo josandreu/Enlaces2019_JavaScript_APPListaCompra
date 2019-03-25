@@ -82,11 +82,11 @@ const showList = () => {
         list.forEach(element => {
             let divColor = 'success';
             let checkColor = 'success';
-            if (element.Comprado === true) {
+            if (element.Comprado) {
                 divColor = 'warning';
                 checkColor = 'warning';
             }
-            // CUIDADO! si ponemos solo innenHTML = , machaca lo anterior
+            // CUIDADO! si ponemos solo innerHTML = , machaca lo anterior
             // utilizamos la notación ` `
             shopList.innerHTML +=
                 /*html*/
@@ -97,7 +97,7 @@ const showList = () => {
                 <span class="badge badge-pill badge-secondary">${element.Prioridad}</span>
                 <span id="id" class="d-none">${element.Id}</span>
                 <i class="material-icons align-middle float-right deleteIcon">delete</i>
-                <i id="${element.Id}" class="material-icons align-middle float-right check text-${checkColor}">check_circle_outline</i>
+                <i id="${element.Id}ckIcon" class="material-icons align-middle float-right check text-${checkColor}">check_circle_outline</i>
                 </div>`;
         });
     }
@@ -134,7 +134,7 @@ const deleteElement = (id) => {
     let index = 0;
     let i = 0;
     for (i; i < list.length; i++) {
-        if (list[i].id === id) {
+        if (list[i].Id === id) {
             index = i;
         }
     }
@@ -147,8 +147,8 @@ const deleteElement = (id) => {
 };
 
 const changeColors = (id) => {
-    document.getElementById(id).classList.remove("text-success");
-    document.getElementById(id).classList.add("text-warning");
+    document.getElementById(id + 'ckIcon').classList.remove("text-success");
+    document.getElementById(id + 'ckIcon').classList.add("text-warning");
     document.getElementById(id + 'ck').classList.remove("alert-success");
     document.getElementById(id + 'ck').classList.add("alert-warning");
 };
